@@ -9,11 +9,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define FONT_SIZE 75
 
 #define HEIGHT 750
 #define WIDTH 700
+
+#define ROAD_WIDTH 620
+#define ROAD_X 40
 
 #define LEFT 0
 #define RIGHT 1
@@ -24,8 +28,12 @@
 int getmid(int w);
 int move(int dir, int cord, int mid);
 
-void drawTexture(int x, int y, int h, int w, SDL_Texture *img, SDL_Renderer *renderer, bool rotate);
+// Drawing
+void drawTexture(SDL_Renderer *renderer, int x, int y, int h, int w, SDL_Texture *img, bool rotate);
+void drawRect(SDL_Renderer *renderer, int x, int y, int w, int h, int r, int g, int b);
+void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex, bool rotate);
 
-// Score
+// Game elements
 void render_score(SDL_Renderer *renderer, float score);
+void spawn_jerry(int index);
 #endif

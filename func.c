@@ -1,6 +1,7 @@
 #include "func.h"
+#include <SDL2/SDL_render.h>
 
-void drawTexture(int x, int y, int w, int h, SDL_Texture *tex, SDL_Renderer *renderer, bool rotate) {
+void drawTexture(SDL_Renderer *renderer, int x, int y, int w, int h, SDL_Texture *tex, bool rotate) {
   SDL_Rect rect;
   rect.h = h;
   rect.w = w;
@@ -12,6 +13,25 @@ void drawTexture(int x, int y, int w, int h, SDL_Texture *tex, SDL_Renderer *ren
     SDL_RenderCopyEx(renderer, tex, NULL, &rect, 0.0, NULL, SDL_FLIP_VERTICAL);
   } 
 } 
+
+void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex, bool rotate) {
+  if (!rotate) 
+    SDL_RenderCopy(renderer, tex, NULL, &rect);
+  else {
+    SDL_RenderCopyEx(renderer, tex, NULL, &rect, 0.0, NULL, SDL_FLIP_VERTICAL);
+  } 
+} 
+
+void drawRect(SDL_Renderer *renderer, int x, int y, int w, int h, int r, int g, int b) {
+  SDL_Rect rect;
+  rect.h = h;
+  rect.w = w;
+  rect.x = x;
+  rect.y = y;
+
+  SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+  SDL_RenderFillRect(renderer, &rect);
+}
 
 int getmid(int w) {
   return WIDTH/2-w/2;
