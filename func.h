@@ -29,11 +29,18 @@ int getmid(int w);
 int move(int dir, int cord, int mid);
 
 // Drawing
-void drawTexture(SDL_Renderer *renderer, int x, int y, int h, int w, SDL_Texture *img, bool rotate);
+void drawTexture(SDL_Renderer *renderer, int x, int y, int h, int w, SDL_Texture *img);
+void drawTextureRotated(SDL_Renderer *renderer, int x, int y, int h, int w, SDL_Texture *img);
+void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex);
+void drawImgRectRotated(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex);
 void drawRect(SDL_Renderer *renderer, int x, int y, int w, int h, int r, int g, int b);
-void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex, bool rotate);
 
 // Game elements
+void init_jerry_can();
+void init_score();
+void init_car();
+void init_everything();
+
 void render_score(SDL_Renderer *renderer, float score);
 void spawn_jerry(int index);
 #endif

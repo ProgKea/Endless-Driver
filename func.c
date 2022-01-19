@@ -1,25 +1,30 @@
 #include "func.h"
 #include <SDL2/SDL_render.h>
 
-void drawTexture(SDL_Renderer *renderer, int x, int y, int w, int h, SDL_Texture *tex, bool rotate) {
+void drawTexture(SDL_Renderer *renderer, int x, int y, int w, int h, SDL_Texture *tex) {
   SDL_Rect rect;
   rect.h = h;
   rect.w = w;
   rect.x = x;
   rect.y = y;
-  if (!rotate) 
-    SDL_RenderCopy(renderer, tex, NULL, &rect);
-  else {
-    SDL_RenderCopyEx(renderer, tex, NULL, &rect, 0.0, NULL, SDL_FLIP_VERTICAL);
-  } 
+  SDL_RenderCopy(renderer, tex, NULL, &rect);
 } 
 
-void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex, bool rotate) {
-  if (!rotate) 
-    SDL_RenderCopy(renderer, tex, NULL, &rect);
-  else {
-    SDL_RenderCopyEx(renderer, tex, NULL, &rect, 0.0, NULL, SDL_FLIP_VERTICAL);
-  } 
+void drawTextureRotated(SDL_Renderer *renderer, int x, int y, int w, int h, SDL_Texture *tex) {
+  SDL_Rect rect;
+  rect.h = h;
+  rect.w = w;
+  rect.x = x;
+  rect.y = y;
+  SDL_RenderCopyEx(renderer, tex, NULL, &rect, 0.0, NULL, SDL_FLIP_VERTICAL);
+} 
+
+void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex) {
+  SDL_RenderCopy(renderer, tex, NULL, &rect);
+} 
+
+void drawImgRectRotated(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex) {
+  SDL_RenderCopyEx(renderer, tex, NULL, &rect, 0.0, NULL, SDL_FLIP_VERTICAL);
 } 
 
 void drawRect(SDL_Renderer *renderer, int x, int y, int w, int h, int r, int g, int b) {
