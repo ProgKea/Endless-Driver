@@ -16,18 +16,20 @@ SDL_Texture *scoreTexture;
 // jerry values
 SDL_Texture *jerry_can;
 SDL_Rect jerry_rect_arr[10];
-float jerry;
-float jerry_rate;
+float jerry, jerry_max, jerry_rate, jerry_content;
 int jerry_pos[3] = {WIDTH/3, -WIDTH/3, 0};
 
 // car values
-int car_x, car_mid;
+int car_x, car_mid, speed;
 SDL_Texture *car;
+SDL_Rect car_rect;
 
 void init_jerry_can() {
-  jerry = 150;
-  jerry_rate = 0.05;
+  jerry = jerry_max = 120;
+  jerry_content = 20;
+  jerry_rate = 0.1;
   jerry_can = IMG_LoadTexture(renderer, "data/jerrycan.png");
+  spawn_jerry(0);
 }
 
 void init_score() {
@@ -38,8 +40,12 @@ void init_score() {
 
 void init_car() {
   car = IMG_LoadTexture(renderer, IMG_PATH);
-  car_x = getmid(60);
-  car_mid = getmid(60);
+  car_rect.w = 60;
+  car_rect.h = 110;
+  car_rect.x = getmid(60);
+  car_rect.y = 600;
+  car_mid = getmid(car_rect.w);
+  speed = 5;
 }
 
 void check_sdl_errors() {
@@ -62,6 +68,8 @@ void check_sdl_errors() {
 }
 
 void init_everything() {
+  // set seed for random values
+  srand(time(NULL));
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
   win = SDL_CreateWindow("Endless Driver", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
@@ -75,6 +83,15 @@ void init_everything() {
   check_sdl_errors();
 }
 
+void end_game() {
+  SDL_DestroyWindow(win);
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyTexture(car);
+  SDL_DestroyTexture(jerry_can);
+  SDL_DestroyTexture(scoreTexture);
+  exit(0);
+}
+
 void render_score(SDL_Renderer *Renderer, float score_int) {
   char score_char[5];
   sprintf(score_char, "%.0f", score);
@@ -85,13 +102,18 @@ void render_score(SDL_Renderer *Renderer, float score_int) {
   SDL_DestroyTexture(scoreTexture);
 }
 
-
+// Game logic
 void spawn_jerry(int index) {
-  srand(time(NULL));
   SDL_Rect jerry_rect;
   jerry_rect.w = 40;
   jerry_rect.h = 50;
   jerry_rect.x = (WIDTH/2-jerry_rect.w/2) + jerry_pos[rand()%3];
   jerry_rect.y = -jerry_rect.h;
   jerry_rect_arr[index] = jerry_rect;
+}
+
+bool check_collision(SDL_Rect rect_a, SDL_Rect rect_b) {
+  if (rect_a.x > rect_b.x && rect_a.x < rect_b.x + rect_b.h && rect_a.y > rect_b.y && rect_a.y < rect_b.y + rect_b.h)
+    return true;
+  return false;
 }
