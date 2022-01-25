@@ -27,4 +27,8 @@ extern SDL_Texture *jerry_can;
 extern float jerry;
 extern float jerry_max;
 extern float jerry_content;
+
+// cone values
+extern SDL_Texture *cone;
+extern SDL_Rect cone_rect_arr[10];
 #endif

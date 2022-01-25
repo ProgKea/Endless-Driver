@@ -1,10 +1,8 @@
 #include "func.h"
 #include "vars.h"
 
-// TODO: create losing logic
-// TODO: create logic for spawning jerrycans
-// TODO: create obstacles
-// TODO: end the game when hitting a obstacle
+// TODO: create logic for spawning objects
+// TODO: add sound effects and music to the game
 
 const int fps = 60;
 const int desiredDelta = 1000 / fps;
@@ -36,6 +34,9 @@ int main()
     for (int i=0; i<(sizeof(jerry_rect_arr)/sizeof(jerry_rect_arr[0])); i++) {
       drawImgRect(renderer, jerry_rect_arr[i], jerry_can); // jerry_can
     }
+    for (int i=0; i<(sizeof(cone_rect_arr)/sizeof(cone_rect_arr[0])); i++) {
+      drawImgRect(renderer, cone_rect_arr[i], cone); // cone
+    }
     drawRect(renderer, 10, 225, (int)jerry, 20, 100, 25, 0); // Jerry bar
     drawImgRectRotated(renderer, car_rect, car); // car
     render_score(renderer, score); 
@@ -50,8 +51,16 @@ int main()
     for (int i=0; i<(sizeof(jerry_rect_arr)/sizeof(jerry_rect_arr[0])); i++) {
       jerry_rect_arr[i].y+=speed;
       if (check_collision(jerry_rect_arr[i], car_rect)) {
+        printf("%d\n", jerry_rect_arr[i].y);
         spawn_jerry(i);
         jerry += jerry_content;
+      }
+    }
+
+    for (int i=0; i<(sizeof(cone_rect_arr)/sizeof(cone_rect_arr[0])); i++) {
+      cone_rect_arr[i].y+=speed;
+      if (check_collision(cone_rect_arr[i], car_rect)) {
+        end_game();
       }
     }
 
@@ -71,6 +80,7 @@ int main()
   SDL_DestroyRenderer(renderer);
   SDL_DestroyTexture(car);
   SDL_DestroyTexture(jerry_can);
+  SDL_DestroyTexture(cone);
   SDL_DestroyTexture(scoreTexture);
   return 0;
 }

@@ -7,13 +7,14 @@
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_error.h>
+#include <SDL2/SDL_audio.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
 
 #define HEIGHT 750
-#define WIDTH 1000
+#define WIDTH 1260
 
 #define FONT_SIZE HEIGHT/10
 
@@ -23,7 +24,6 @@
 #define LEFT 0
 #define RIGHT 1
 
-#define IMG_PATH "data/car.png" 
 #define FONT_PATH "data/teletactile-font.ttf"
 
 int getmid(int w);
@@ -46,6 +46,7 @@ void init_everything();
 // Game logic
 void render_score(SDL_Renderer *renderer, float score);
 void spawn_jerry(int index);
+void spawn_cone(int index);
 bool check_collision(SDL_Rect rect_a, SDL_Rect rect_b);
 void end_game();
 #endif
