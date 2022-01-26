@@ -3,6 +3,7 @@
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_video.h>
+#include <SDL2/SDL_mixer.h>
 extern SDL_Window *win;
 extern SDL_Renderer *renderer;
 
@@ -31,4 +32,9 @@ extern float jerry_content;
 // cone values
 extern SDL_Texture *cone;
 extern SDL_Rect cone_rect_arr[10];
+
+// audio values
+extern Mix_Chunk *collect_sound_effect;
+extern Mix_Chunk *explosion;
+extern Mix_Music *main_music;
 #endif

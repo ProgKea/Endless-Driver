@@ -1,5 +1,6 @@
 #include "func.h"
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 SDL_Window *win;
 SDL_Renderer *renderer;
@@ -22,6 +23,17 @@ float jerry, jerry_max, jerry_rate, jerry_content;
 // cone values
 SDL_Texture *cone;
 SDL_Rect cone_rect_arr[10];
+
+/* audio values */
+// sound effects
+Mix_Chunk *collect_sound_effect;
+Mix_Chunk *explosion;
+Mix_Chunk *enter;
+Mix_Chunk *menuing;
+
+// Music
+Mix_Music *main_music;
+Mix_Music *menu_music;
 
 // spawn values for cone and jerry
 int spawn_pos[3] = {WIDTH/3, -WIDTH/3, 0};
@@ -60,6 +72,13 @@ void init_car() {
   speed = 5;
 }
 
+void init_audio() {
+  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2043);
+  collect_sound_effect = Mix_LoadWAV("data/jerry.wav");
+  explosion = Mix_LoadWAV("data/explo.wav");
+  main_music = Mix_LoadMUS("data/mainmusic.mp3");
+}
+
 void check_sdl_errors() {
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     printf("SDL_Init failed %s\n", SDL_GetError());
@@ -92,6 +111,7 @@ void init_everything() {
   init_jerry_can();
   init_cone();
   init_score();
+  init_audio();
 
   check_sdl_errors();
 }

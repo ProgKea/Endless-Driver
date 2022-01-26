@@ -1,8 +1,9 @@
 #include "func.h"
 #include "vars.h"
+#include <SDL2/SDL_mixer.h>
 
 // TODO: create logic for spawning objects
-// TODO: add sound effects and music to the game
+// TODO: add main menu
 
 const int fps = 60;
 const int desiredDelta = 1000 / fps;
@@ -10,6 +11,9 @@ const int desiredDelta = 1000 / fps;
 int main()
 {
   init_everything();
+
+  // start main music
+  Mix_PlayMusic(main_music, -1);
 
   // game loop
   while (1) {
@@ -47,19 +51,22 @@ int main()
     score += score_rate;
     jerry -= jerry_rate;
 
-    // driving (moving objects)
+    /* driving (moving objects) */
+    // jerry cans
     for (int i=0; i<(sizeof(jerry_rect_arr)/sizeof(jerry_rect_arr[0])); i++) {
       jerry_rect_arr[i].y+=speed;
       if (check_collision(jerry_rect_arr[i], car_rect)) {
-        printf("%d\n", jerry_rect_arr[i].y);
+        Mix_PlayChannel(-1, collect_sound_effect, 0);
         spawn_jerry(i);
         jerry += jerry_content;
       }
     }
 
+    // cones
     for (int i=0; i<(sizeof(cone_rect_arr)/sizeof(cone_rect_arr[0])); i++) {
       cone_rect_arr[i].y+=speed;
       if (check_collision(cone_rect_arr[i], car_rect)) {
+        Mix_PlayChannel(-1, explosion, 0);
         end_game();
       }
     }
@@ -82,5 +89,8 @@ int main()
   SDL_DestroyTexture(jerry_can);
   SDL_DestroyTexture(cone);
   SDL_DestroyTexture(scoreTexture);
+  Mix_FreeChunk(collect_sound_effect);
+  Mix_FreeChunk(explosion);
+  Mix_FreeMusic(main_music);
   return 0;
 }

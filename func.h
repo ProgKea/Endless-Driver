@@ -7,7 +7,7 @@
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_error.h>
-#include <SDL2/SDL_audio.h>
+#include <SDL2/SDL_mixer.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
