@@ -1,7 +1,11 @@
 #include "func.h"
 #include "vars.h"
+#include <SDL2/SDL_keycode.h>
 
 // TODO: create logic for spawning objects
+// TODO: create highscore saving system 
+// TODO: create game over screen with a restart button
+// TODO: add function jerry_overflow_speed that checks if the jerry is over the limit and if it is than give the car a speed based on the overflowing jerry lol
 
 const int fps = 60;
 const int desiredDelta = 1000 / fps;
@@ -10,9 +14,6 @@ int startLoop;
 int main()
 {
   init_everything();
-
-  // start main music
-  // Mix_PlayMusic(main_music, -1);
 
   // game loop
   while (1) {
@@ -40,7 +41,8 @@ int main()
       }
       for (int i=0; i<(sizeof(cone_rect_arr)/sizeof(cone_rect_arr[0])); i++) {
         drawImgRect(renderer, cone_rect_arr[i], cone); // cone
-      } drawRect(renderer, 10, 225, (int)jerry, 20, 100, 25, 0); // Jerry bar
+      } 
+      render_jerry_bar();
       drawImgRectRotated(renderer, car_rect, car); // car
       render_score(score); 
       SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255); // background colour
@@ -58,15 +60,18 @@ int main()
           Mix_PlayChannel(-1, collect_sound_effect, 0);
           spawn_jerry(i);
           jerry += jerry_content;
+        } else if (jerry_rect_arr[0].y > HEIGHT+jerry_rect_arr[i].h) {
+          spawn_jerry(0);
         }
       }
-
       // cones
       for (int i=0; i<(sizeof(cone_rect_arr)/sizeof(cone_rect_arr[0])); i++) {
         cone_rect_arr[i].y+=speed;
         if (check_collision(cone_rect_arr[i], car_rect)) {
           Mix_PlayChannel(-1, explosion, 0);
           end_game();
+        } else if (cone_rect_arr[0].y > HEIGHT+cone_rect_arr[i].h) {
+          spawn_cone(0);
         }
       }
 
@@ -74,9 +79,9 @@ int main()
       if (jerry <= 0) 
         end_game();
 
-      // limit jerry
       if (jerry > jerry_max)
-        jerry = jerry_max;
+        jerry_overflow_speed();
+      else speed = DEFAULT_SPEED;
     } 
 
     else if (is_main_menu) {
@@ -88,6 +93,8 @@ int main()
           break;
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN && item_index == 0)
           start_game();
+        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN && item_index == 3)
+          quit_game();
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_DOWN)
           move_down();
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_UP)

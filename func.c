@@ -42,10 +42,11 @@ int getmid(int w) {
   return WIDTH/2-w/2;
 }
 
-int move(int dir, int cord, int mid) {
-  if (dir == LEFT)
-    cord -= cord<=mid-(WIDTH/3)? 0:WIDTH/3;
-  if (dir == RIGHT)
-    cord += cord>=mid+(WIDTH/3)? 0:WIDTH/3;
-  return cord;
-}
+int generate_random_int(int range) {
+  return rand()%range;
+} 
+
+int generate_random_negative_int(int range) {
+  int a = rand()%range;
+  return a-a*2;
+} 

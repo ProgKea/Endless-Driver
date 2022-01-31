@@ -1,4 +1,5 @@
 #include "func.h"
+#include <SDL2/SDL_mixer.h>
 
 SDL_Window *win;
 SDL_Renderer *renderer;
@@ -9,7 +10,7 @@ bool is_main_menu;
 SDL_Surface *textSurface;
 SDL_Texture *textTexture;
 SDL_Color selected_item_color = {20, 20, 20};
-const char *menu_items[2];
+const char *menu_items[4];
 int item_index;
 int item_length;
 
@@ -61,7 +62,7 @@ void init_jerry_can() {
 
 void init_score() {
   score = 0;
-  score_rate = 0.025;
+  score_rate = (float)speed / 320;
   font = TTF_OpenFont("data/teletactile-font.ttf", FONT_SIZE);
 }
 
@@ -77,13 +78,15 @@ void init_car() {
   car_rect.x = getmid(60);
   car_rect.y = 600;
   car_mid = getmid(car_rect.w);
-  speed = 5;
+  speed = DEFAULT_SPEED;
 }
 
 void init_menu() {
   is_main_menu = true;
   menu_items[0] = "Play";
   menu_items[1] = "Cars";
+  menu_items[2] = "Options";
+  menu_items[3] = "Exit";
   item_index = 0;
   item_length = sizeof(menu_items)/sizeof(menu_items[0]);
 }
@@ -91,10 +94,13 @@ void init_menu() {
 void init_audio() {
   Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2043);
   collect_sound_effect = Mix_LoadWAV("data/jerry.wav");
+  Mix_VolumeChunk(collect_sound_effect, 50);
   explosion = Mix_LoadWAV("data/explo.wav");
   main_music = Mix_LoadMUS("data/mainmusic.mp3");
+  menu_music = Mix_LoadMUS("data/menu_music.mp3");
   menuing = Mix_LoadWAV("data/menu.mp3");
   enter = Mix_LoadWAV("data/enter.mp3");
+  Mix_PlayMusic(menu_music, -1);
 }
 
 void check_sdl_errors() {
@@ -144,7 +150,15 @@ void free_resources() {
   SDL_DestroyTexture(scoreTexture);
   Mix_FreeChunk(collect_sound_effect);
   Mix_FreeChunk(explosion);
+  Mix_FreeChunk(menuing);
+  Mix_FreeChunk(enter);
   Mix_FreeMusic(main_music);
+  Mix_FreeMusic(menu_music);
+}
+
+void quit_game() {
+  free_resources();
+  exit(1);
 }
 
 void end_game() {
@@ -152,12 +166,14 @@ void end_game() {
   init_jerry_can();
   init_cone();
   init_score();
+  Mix_PlayMusic(menu_music, -1);
   is_main_menu = true;
   is_in_game = false;
 }
 
 void start_game() {
   Mix_PlayChannel(-1, enter, 0);
+  Mix_PlayMusic(main_music, -1);
   is_main_menu = false;
   is_in_game = true;
 }
@@ -172,22 +188,42 @@ void render_score(float score_int) {
   SDL_DestroyTexture(scoreTexture);
 }
 
+void render_jerry_bar() {
+  if (jerry < jerry_max)
+    drawRect(renderer, 10, 225, (int)jerry, 20, 100, 25, 0);
+  else drawRect(renderer, 10, 225, (int)jerry, 20, 5, 195, 221);
+}
+
 // Game logic
+void jerry_overflow_speed() {
+  score_rate = (float)speed / 320;
+  speed = DEFAULT_SPEED + jerry/20;
+}
+
+int move(int dir, int cord, int mid) {
+  if (dir == LEFT)
+    cord -= cord<=mid-(WIDTH/3)? 0:WIDTH/3;
+  if (dir == RIGHT)
+    cord += cord>=mid+(WIDTH/3)? 0:WIDTH/3;
+  return cord;
+}
+
+SDL_Rect create_rect(int width, int height, int x, int y) {
+  SDL_Rect rectangle;
+  rectangle.w = width;
+  rectangle.h = height;
+  rectangle.x = x;
+  rectangle.y = y;
+  return rectangle;
+}
+
 void spawn_jerry(int index) {
-  SDL_Rect jerry_rect;
-  jerry_rect.w = 40;
-  jerry_rect.h = 50;
-  jerry_rect.x = (WIDTH/2-jerry_rect.w/2) + spawn_pos[rand()%3];
-  jerry_rect.y = -jerry_rect.h;
+  SDL_Rect jerry_rect = create_rect(40, 50, (WIDTH/2-40/2) + spawn_pos[rand()%3], generate_random_negative_int(500));
   jerry_rect_arr[index] = jerry_rect;
 }
 
 void spawn_cone(int index) {
-  SDL_Rect cone_rect;
-  cone_rect.w = 50;
-  cone_rect.h = 50;
-  cone_rect.x = (WIDTH/2-cone_rect.w/2) + spawn_pos[rand()%3];
-  cone_rect.y = -cone_rect.h;
+  SDL_Rect cone_rect = create_rect(50, 50, (WIDTH/2-50/2) + spawn_pos[rand()%3], generate_random_negative_int(500));
   cone_rect_arr[index] = cone_rect;
 }
 
@@ -227,7 +263,6 @@ void render_text_mid(const char *text, int y, int w, int h, SDL_Color color) {
   SDL_FreeSurface(textSurface);
   SDL_DestroyTexture(textTexture);
 }
-
 
 void move_up() {
   if (item_index > 0) {

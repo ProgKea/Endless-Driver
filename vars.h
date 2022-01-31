@@ -47,4 +47,5 @@ extern SDL_Rect cone_rect_arr[10];
 extern Mix_Chunk *collect_sound_effect;
 extern Mix_Chunk *explosion;
 extern Mix_Music *main_music;
+extern Mix_Music *menu_music;
 #endif
