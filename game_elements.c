@@ -1,13 +1,21 @@
 #include "func.h"
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
 
 SDL_Window *win;
 SDL_Renderer *renderer;
+bool is_in_game = false;
+
+/* Menu values */
+bool is_main_menu;
+SDL_Surface *textSurface;
+SDL_Texture *textTexture;
+SDL_Color selected_item_color = {20, 20, 20};
+const char *menu_items[2];
+int item_index;
+int item_length;
 
 // Font values;
 SDL_Color font_color = {255, 255, 255};
-TTF_Font *score_font;
+TTF_Font *font;
 
 // Score values
 float score;
@@ -24,6 +32,14 @@ float jerry, jerry_max, jerry_rate, jerry_content;
 SDL_Texture *cone;
 SDL_Rect cone_rect_arr[10];
 
+// spawn values for cone and jerry
+int spawn_pos[3] = {WIDTH/3, -WIDTH/3, 0};
+
+// car values
+int car_x, car_mid, speed;
+SDL_Texture *car;
+SDL_Rect car_rect;
+
 /* audio values */
 // sound effects
 Mix_Chunk *collect_sound_effect;
@@ -34,14 +50,6 @@ Mix_Chunk *menuing;
 // Music
 Mix_Music *main_music;
 Mix_Music *menu_music;
-
-// spawn values for cone and jerry
-int spawn_pos[3] = {WIDTH/3, -WIDTH/3, 0};
-
-// car values
-int car_x, car_mid, speed;
-SDL_Texture *car;
-SDL_Rect car_rect;
 
 void init_jerry_can() {
   jerry = jerry_max = 120;
@@ -54,7 +62,7 @@ void init_jerry_can() {
 void init_score() {
   score = 0;
   score_rate = 0.025;
-  score_font = TTF_OpenFont("data/teletactile-font.ttf", FONT_SIZE);
+  font = TTF_OpenFont("data/teletactile-font.ttf", FONT_SIZE);
 }
 
 void init_cone() {
@@ -72,11 +80,21 @@ void init_car() {
   speed = 5;
 }
 
+void init_menu() {
+  is_main_menu = true;
+  menu_items[0] = "Play";
+  menu_items[1] = "Cars";
+  item_index = 0;
+  item_length = sizeof(menu_items)/sizeof(menu_items[0]);
+}
+
 void init_audio() {
   Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2043);
   collect_sound_effect = Mix_LoadWAV("data/jerry.wav");
   explosion = Mix_LoadWAV("data/explo.wav");
   main_music = Mix_LoadMUS("data/mainmusic.mp3");
+  menuing = Mix_LoadWAV("data/menu.mp3");
+  enter = Mix_LoadWAV("data/enter.mp3");
 }
 
 void check_sdl_errors() {
@@ -111,24 +129,43 @@ void init_everything() {
   init_jerry_can();
   init_cone();
   init_score();
+  init_menu();
   init_audio();
 
   check_sdl_errors();
 }
 
-void end_game() {
+void free_resources() {
   SDL_DestroyWindow(win);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyTexture(car);
   SDL_DestroyTexture(jerry_can);
+  SDL_DestroyTexture(cone);
   SDL_DestroyTexture(scoreTexture);
-  exit(0);
+  Mix_FreeChunk(collect_sound_effect);
+  Mix_FreeChunk(explosion);
+  Mix_FreeMusic(main_music);
 }
 
-void render_score(SDL_Renderer *Renderer, float score_int) {
+void end_game() {
+  init_car();
+  init_jerry_can();
+  init_cone();
+  init_score();
+  is_main_menu = true;
+  is_in_game = false;
+}
+
+void start_game() {
+  Mix_PlayChannel(-1, enter, 0);
+  is_main_menu = false;
+  is_in_game = true;
+}
+
+void render_score(float score_int) {
   char score_char[5];
   sprintf(score_char, "%.0f", score);
-  scoreSurface = TTF_RenderText_Solid(score_font, score_char, font_color);
+  scoreSurface = TTF_RenderText_Solid(font, score_char, font_color);
   scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
   drawTexture(renderer, getmid(FONT_SIZE), FONT_SIZE, FONT_SIZE, FONT_SIZE, scoreTexture);
   SDL_FreeSurface(scoreSurface);
@@ -158,4 +195,50 @@ bool check_collision(SDL_Rect rect_a, SDL_Rect rect_b) {
   if (rect_a.x > rect_b.x && rect_a.x < rect_b.x + rect_b.w && rect_a.y+rect_b.h/2-speed > rect_b.y && rect_a.y < rect_b.y+rect_b.h)
     return true;
   return false;
+}
+
+// Menu functions
+//void render_text(const char *text, int x, int y, int w, int h) {
+//  textSurface = TTF_RenderText_Solid(font, text, font_color);
+//  textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+//  drawTexture(renderer, x, y, w*strlen(text), h, textTexture);
+//  SDL_FreeSurface(textSurface);
+//  SDL_DestroyTexture(textTexture);
+//}
+
+void render_text_mid_list(const char *text[], int y, int w, int h, SDL_Color color) {
+  for (int i=0; i<item_length; i++) {
+    if (item_index == i) {
+      textSurface = TTF_RenderText_Solid(font, text[i], color);
+    }
+    else textSurface = TTF_RenderText_Solid(font, text[i], font_color);
+    textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    drawTexture(renderer, getmid(w*strlen(text[i])), y, w*strlen(text[i]), h, textTexture);
+    SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(textTexture);
+    y+=h;
+  }
+}
+
+void render_text_mid(const char *text, int y, int w, int h, SDL_Color color) {
+  textSurface = TTF_RenderText_Solid(font, text, color);
+  textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+  drawTexture(renderer, getmid(w*strlen(text)), y, w*strlen(text), h, textTexture);
+  SDL_FreeSurface(textSurface);
+  SDL_DestroyTexture(textTexture);
+}
+
+
+void move_up() {
+  if (item_index > 0) {
+    Mix_PlayChannel(-1, menuing, 0);
+    item_index--;
+  }
+}
+
+void move_down() {
+  if (item_index < item_length-1) {
+    Mix_PlayChannel(-1, menuing, 0);
+    item_index++;
+  }
 }

@@ -6,6 +6,16 @@
 #include <SDL2/SDL_mixer.h>
 extern SDL_Window *win;
 extern SDL_Renderer *renderer;
+extern bool is_in_game;
+
+// Menu values
+extern SDL_Surface *textSurface;
+extern SDL_Texture *textTexture;
+extern SDL_Color selected_item_color;
+extern SDL_Color font_color;
+extern bool is_main_menu;
+extern const char *menu_items[2];
+extern int item_index;
 
 // car values
 extern SDL_Texture *car;
@@ -15,7 +25,7 @@ extern int car_mid;
 extern int speed;
 
 // score values
-extern TTF_Font *score_font;
+extern TTF_Font *font;
 extern SDL_Surface *scoreSurface;
 extern SDL_Texture *scoreTexture;
 extern float score;

@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
+#include <string.h>
 
 #define HEIGHT 750
 #define WIDTH 1260
@@ -26,6 +27,7 @@
 
 #define FONT_PATH "data/teletactile-font.ttf"
 
+void free_resources();
 int getmid(int w);
 int move(int dir, int cord, int mid);
 
@@ -44,9 +46,16 @@ void init_car();
 void init_everything();
 
 // Game logic
-void render_score(SDL_Renderer *renderer, float score);
+void render_score(float score);
 void spawn_jerry(int index);
 void spawn_cone(int index);
 bool check_collision(SDL_Rect rect_a, SDL_Rect rect_b);
 void end_game();
+// Menu functions
+//void render_text(const char *text, int x, int y, int w, int h);
+void render_text_mid(const char *text, int y, int w, int h, SDL_Color color);
+void render_text_mid_list(const char *text[], int y, int w, int h, SDL_Color color);
+void start_game();
+void move_up();
+void move_down();
 #endif
