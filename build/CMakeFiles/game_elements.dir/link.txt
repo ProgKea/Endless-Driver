@@ -1,0 +1,2 @@
+/usr/bin/ar qc libgame_elements.a CMakeFiles/game_elements.dir/game_elements.c.o
+/usr/bin/ranlib libgame_elements.a
