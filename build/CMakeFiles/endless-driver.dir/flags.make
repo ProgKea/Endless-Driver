@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -isystem /usr/include/SDL2
 
-C_FLAGS = 
+C_FLAGS = -Wall -pedantic -Werror -Wshadow -O4
 

@@ -56,10 +56,12 @@ CMakeFiles/func.dir/func.c.o: /home/keanu/code/remake-Endless-Driver/src/func.c 
   /usr/include/bits/stdio_lim.h \
   /usr/include/bits/floatn.h \
   /usr/include/bits/floatn-common.h \
+  /usr/include/bits/stdio.h \
   /usr/include/stdlib.h \
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/alloca.h \
+  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/string.h \
   /usr/include/bits/types/locale_t.h \
@@ -335,13 +337,9 @@ CMakeFiles/func.dir/func.c.o: /home/keanu/code/remake-Endless-Driver/src/func.c 
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/mmintrin.h:
 
-/usr/include/SDL2/SDL_image.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/hresetintrin.h:
 
-/usr/include/alloca.h:
-
-/usr/include/time.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/waitpkgintrin.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/xtestintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/avx512pfintrin.h:
 
@@ -483,6 +481,8 @@ CMakeFiles/func.dir/func.c.o: /home/keanu/code/remake-Endless-Driver/src/func.c 
 
 /usr/include/bits/types.h:
 
+/usr/include/bits/stdlib-bsearch.h:
+
 /usr/include/SDL2/SDL_keycode.h:
 
 /usr/include/bits/wordsize.h:
@@ -513,6 +513,14 @@ CMakeFiles/func.dir/func.c.o: /home/keanu/code/remake-Endless-Driver/src/func.c 
 
 /usr/include/bits/stdint-uintn.h:
 
+/usr/include/SDL2/SDL_image.h:
+
+/usr/include/alloca.h:
+
+/usr/include/time.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/waitpkgintrin.h:
+
 /usr/include/SDL2/SDL_touch.h:
 
 /usr/include/bits/types/locale_t.h:
@@ -534,8 +542,6 @@ CMakeFiles/func.dir/func.c.o: /home/keanu/code/remake-Endless-Driver/src/func.c 
 /usr/include/wchar.h:
 
 /usr/include/bits/wchar.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/hresetintrin.h:
 
 /usr/include/bits/types/wint_t.h:
 
@@ -643,6 +649,8 @@ CMakeFiles/func.dir/func.c.o: /home/keanu/code/remake-Endless-Driver/src/func.c 
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/sgxintrin.h:
 
+/usr/include/bits/stdio.h:
+
 /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/wbnoinvdintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/xsaveintrin.h:
@@ -650,5 +658,3 @@ CMakeFiles/func.dir/func.c.o: /home/keanu/code/remake-Endless-Driver/src/func.c 
 /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/pmmintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/xsavesintrin.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include/xtestintrin.h:

@@ -10,7 +10,11 @@ const int fps = 60;
 const int desiredDelta = 1000 / fps;
 int startLoop;
 
+#ifdef _WIN32
+int WinMain(int argc, char *argv[])
+#else
 int main()
+#endif
 {
   init_everything();
 
@@ -59,7 +63,11 @@ int main()
           Mix_PlayChannel(-1, collect_sound_effect, 0);
           spawn_jerry(i);
           jerry += jerry_content;
-        } else if (jerry_rect_arr[0].y > HEIGHT+jerry_rect_arr[i].h) {
+        } 
+        else if (jerry_rect_arr[0].y > HEIGHT+jerry_rect_arr[i].h) { // Check if jerry is outside of the screen if yes than respawn it
+          spawn_jerry(0);
+        }
+        if (check_collision(jerry_rect_arr[i], cone_rect_arr[i])) { // respawn jerry can if it is inside of a cone
           spawn_jerry(0);
         }
       }

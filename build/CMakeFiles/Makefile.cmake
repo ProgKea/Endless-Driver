@@ -52,4 +52,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/endless-driver.dir/DependInfo.cmake"
   "CMakeFiles/func.dir/DependInfo.cmake"
   "CMakeFiles/game_elements.dir/DependInfo.cmake"
+  "CMakeFiles/cross.dir/DependInfo.cmake"
   )

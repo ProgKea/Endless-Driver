@@ -245,6 +245,9 @@ endless-driver_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 endless-driver_SOURCE_DIR:STATIC=/home/keanu/code/remake-Endless-Driver/src
 
+//CMAKE_C_COMPILER
+test:BOOL=OFF
+
 
 ########################
 # INTERNAL cache entries

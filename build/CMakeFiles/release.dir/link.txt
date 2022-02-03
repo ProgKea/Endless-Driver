@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/release.dir/main.c.o -o release  -lendless-driver libfunc.a libgame_elements.a -lSDL2_mixer -lSDL2_ttf -lSDL2_image libfunc.a libgame_elements.a /usr/lib/libSDL2-2.0.so.0.18.2 -lSDL2_mixer -lSDL2_ttf -lSDL2_image 

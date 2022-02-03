@@ -76,6 +76,7 @@ preinstall:
 clean: CMakeFiles/endless-driver.dir/clean
 clean: CMakeFiles/func.dir/clean
 clean: CMakeFiles/game_elements.dir/clean
+clean: CMakeFiles/cross.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -86,12 +87,12 @@ CMakeFiles/endless-driver.dir/all: CMakeFiles/func.dir/all
 CMakeFiles/endless-driver.dir/all: CMakeFiles/game_elements.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keanu/code/remake-Endless-Driver/build/CMakeFiles --progress-num=1,2 "Built target endless-driver"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keanu/code/remake-Endless-Driver/build/CMakeFiles --progress-num=1,2,3,4 "Built target endless-driver"
 .PHONY : CMakeFiles/endless-driver.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/endless-driver.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/keanu/code/remake-Endless-Driver/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/keanu/code/remake-Endless-Driver/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/endless-driver.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/keanu/code/remake-Endless-Driver/build/CMakeFiles 0
 .PHONY : CMakeFiles/endless-driver.dir/rule
@@ -112,7 +113,7 @@ CMakeFiles/endless-driver.dir/clean:
 CMakeFiles/func.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/func.dir/build.make CMakeFiles/func.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/func.dir/build.make CMakeFiles/func.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keanu/code/remake-Endless-Driver/build/CMakeFiles --progress-num=3,4 "Built target func"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keanu/code/remake-Endless-Driver/build/CMakeFiles --progress-num=5,6 "Built target func"
 .PHONY : CMakeFiles/func.dir/all
 
 # Build rule for subdir invocation for target.
@@ -138,7 +139,7 @@ CMakeFiles/func.dir/clean:
 CMakeFiles/game_elements.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game_elements.dir/build.make CMakeFiles/game_elements.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game_elements.dir/build.make CMakeFiles/game_elements.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keanu/code/remake-Endless-Driver/build/CMakeFiles --progress-num=5,6 "Built target game_elements"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keanu/code/remake-Endless-Driver/build/CMakeFiles --progress-num=7,8 "Built target game_elements"
 .PHONY : CMakeFiles/game_elements.dir/all
 
 # Build rule for subdir invocation for target.
@@ -156,6 +157,32 @@ game_elements: CMakeFiles/game_elements.dir/rule
 CMakeFiles/game_elements.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game_elements.dir/build.make CMakeFiles/game_elements.dir/clean
 .PHONY : CMakeFiles/game_elements.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/cross.dir
+
+# All Build rule for target.
+CMakeFiles/cross.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross.dir/build.make CMakeFiles/cross.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross.dir/build.make CMakeFiles/cross.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keanu/code/remake-Endless-Driver/build/CMakeFiles --progress-num= "Built target cross"
+.PHONY : CMakeFiles/cross.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/cross.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/keanu/code/remake-Endless-Driver/build/CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/cross.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/keanu/code/remake-Endless-Driver/build/CMakeFiles 0
+.PHONY : CMakeFiles/cross.dir/rule
+
+# Convenience name for target.
+cross: CMakeFiles/cross.dir/rule
+.PHONY : cross
+
+# clean rule for target.
+CMakeFiles/cross.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross.dir/build.make CMakeFiles/cross.dir/clean
+.PHONY : CMakeFiles/cross.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

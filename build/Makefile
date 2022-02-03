@@ -155,11 +155,25 @@ game_elements/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game_elements.dir/build.make CMakeFiles/game_elements.dir/build
 .PHONY : game_elements/fast
 
+#=============================================================================
+# Target rules for targets named cross
+
+# Build rule for target.
+cross: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cross
+.PHONY : cross
+
+# fast build rule for target.
+cross/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cross.dir/build.make CMakeFiles/cross.dir/build
+.PHONY : cross/fast
+
 func.o: func.c.o
 .PHONY : func.o
 
 # target to build an object file
 func.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/func.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/func.dir/build.make CMakeFiles/func.dir/func.c.o
 .PHONY : func.c.o
 
@@ -168,6 +182,7 @@ func.i: func.c.i
 
 # target to preprocess a source file
 func.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/func.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/func.dir/build.make CMakeFiles/func.dir/func.c.i
 .PHONY : func.c.i
 
@@ -176,6 +191,7 @@ func.s: func.c.s
 
 # target to generate assembly for a file
 func.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/func.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/func.dir/build.make CMakeFiles/func.dir/func.c.s
 .PHONY : func.c.s
 
@@ -184,6 +200,7 @@ game_elements.o: game_elements.c.o
 
 # target to build an object file
 game_elements.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/game_elements.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game_elements.dir/build.make CMakeFiles/game_elements.dir/game_elements.c.o
 .PHONY : game_elements.c.o
 
@@ -192,6 +209,7 @@ game_elements.i: game_elements.c.i
 
 # target to preprocess a source file
 game_elements.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/game_elements.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game_elements.dir/build.make CMakeFiles/game_elements.dir/game_elements.c.i
 .PHONY : game_elements.c.i
 
@@ -200,6 +218,7 @@ game_elements.s: game_elements.c.s
 
 # target to generate assembly for a file
 game_elements.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/endless-driver.dir/build.make CMakeFiles/endless-driver.dir/game_elements.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game_elements.dir/build.make CMakeFiles/game_elements.dir/game_elements.c.s
 .PHONY : game_elements.c.s
 
@@ -235,6 +254,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... cross"
 	@echo "... endless-driver"
 	@echo "... func"
 	@echo "... game_elements"

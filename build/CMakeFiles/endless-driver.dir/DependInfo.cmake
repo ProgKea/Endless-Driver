@@ -8,13 +8,15 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/keanu/code/remake-Endless-Driver/src/func.c" "CMakeFiles/endless-driver.dir/func.c.o" "gcc" "CMakeFiles/endless-driver.dir/func.c.o.d"
+  "/home/keanu/code/remake-Endless-Driver/src/game_elements.c" "CMakeFiles/endless-driver.dir/game_elements.c.o" "gcc" "CMakeFiles/endless-driver.dir/game_elements.c.o.d"
   "/home/keanu/code/remake-Endless-Driver/src/main.c" "CMakeFiles/endless-driver.dir/main.c.o" "gcc" "CMakeFiles/endless-driver.dir/main.c.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/keanu/code/remake-Endless-Driver/build/CMakeFiles/func.dir/DependInfo.cmake"
   "/home/keanu/code/remake-Endless-Driver/build/CMakeFiles/game_elements.dir/DependInfo.cmake"
+  "/home/keanu/code/remake-Endless-Driver/build/CMakeFiles/func.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.
