@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/endless-driver.dir/main.c.o CMakeFiles/endless-driver.dir/func.c.o CMakeFiles/endless-driver.dir/game_elements.c.o -o endless-driver  libgame_elements.a libfunc.a /usr/lib/libSDL2-2.0.so.0.18.2 -lSDL2_mixer -lSDL2_ttf -lSDL2_image 
