@@ -38,9 +38,7 @@ int generate_random_negative_int(int range);
 
 /* Drawing */
 void drawTexture(SDL_Renderer *renderer, int x, int y, int h, int w, SDL_Texture *img);
-void drawTextureRotated(SDL_Renderer *renderer, int x, int y, int h, int w, SDL_Texture *img);
-void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex);
-void drawImgRectRotated(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex);
+void drawTextureRotated(SDL_Renderer *renderer, int x, int y, int h, int w, SDL_Texture *img); void drawImgRect(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex); void drawImgRectRotated(SDL_Renderer *renderer, SDL_Rect rect, SDL_Texture *tex);
 void drawRect(SDL_Renderer *renderer, int x, int y, int w, int h, int r, int g, int b);
 
 /* Game elements */
@@ -56,16 +54,19 @@ void render_score(float score);
 void render_text_mid(const char *text, int y, int w, int h, SDL_Color color);
 void render_text_mid_list(const char *text[], int y, int w, int h, SDL_Color color);
 
-// Game logic
+// Game state
+void enter_main_menu();
+void start_game();
+void end_game();
+
+/* Game logic */
 int move(int dir, int cord, int mid);
 void spawn_jerry(int index);
 void spawn_cone(int index);
 bool check_collision(SDL_Rect rect_a, SDL_Rect rect_b);
 void jerry_overflow_speed();
-void end_game();
 // Menu functions
-// void render_text(const char *text, int x, int y, int w, int h);
-void start_game();
+void render_text(const char *text, int x, int y, int w, int h);
 void quit_game();
 void move_up();
 void move_down();

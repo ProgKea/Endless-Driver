@@ -1,17 +1,13 @@
 #include "func.h"
 #include "vars.h"
-
-// TODO: create logic for spawning objects
-// TODO: create highscore saving system 
-// TODO: create game over screen with a restart button
-// TODO: add function jerry_overflow_speed that checks if the jerry is over the limit and if it is than give the car a speed based on the overflowing jerry lol
+#include <SDL2/SDL_keycode.h>
 
 const int fps = 60;
 const int desiredDelta = 1000 / fps;
 int startLoop;
 
 #ifdef _WIN32
-int WinMain(int argc, char *argv[])
+int WinMain()
 #else
 int main()
 #endif
@@ -90,6 +86,27 @@ int main()
         jerry_overflow_speed();
       else speed = DEFAULT_SPEED;
     } 
+
+    else if (is_game_over) {
+      SDL_Event e;
+      if (SDL_PollEvent(&e)) {
+        if (e.type == SDL_QUIT)
+          break;
+        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_q)
+          break;
+        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_r)
+          start_game();
+        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
+          enter_main_menu();
+      }
+      SDL_RenderClear(renderer);
+      render_text_mid("Game Over", 50, 45, 100, font_color);
+      render_text_mid("R - retry", 200, 30, 100, font_color);
+      render_text_mid("Escape - back to main menu", 300, 30, 100, font_color);
+      SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255); // background colour
+      SDL_RenderPresent(renderer);
+
+    }
 
     else if (is_main_menu) {
       SDL_Event e;

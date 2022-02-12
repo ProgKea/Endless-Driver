@@ -2,10 +2,13 @@
 
 SDL_Window *win;
 SDL_Renderer *renderer;
+
+// game state
 bool is_in_game = false;
+bool is_main_menu;
+bool is_game_over = false;
 
 /* Menu values */
-bool is_main_menu;
 SDL_Surface *textSurface;
 SDL_Texture *textTexture;
 SDL_Color selected_item_color = {20, 20, 20};
@@ -157,7 +160,14 @@ void free_resources() {
 
 void quit_game() {
   free_resources();
-  exit(1);
+  exit(0);
+}
+
+void enter_main_menu() {
+  Mix_PlayChannel(-1, enter, 0);
+  is_game_over = false;
+  is_in_game = false;
+  is_main_menu = true;
 }
 
 void end_game() {
@@ -166,7 +176,8 @@ void end_game() {
   init_cone();
   init_score();
   Mix_PlayMusic(menu_music, -1);
-  is_main_menu = true;
+  is_main_menu = false;
+  is_game_over = true;
   is_in_game = false;
 }
 
@@ -174,6 +185,7 @@ void start_game() {
   Mix_PlayChannel(-1, enter, 0);
   Mix_PlayMusic(main_music, -1);
   is_main_menu = false;
+  is_game_over = false;
   is_in_game = true;
 }
 
@@ -233,13 +245,13 @@ bool check_collision(SDL_Rect rect_a, SDL_Rect rect_b) {
 }
 
 // Menu functions
-//void render_text(const char *text, int x, int y, int w, int h) {
-//  textSurface = TTF_RenderText_Solid(font, text, font_color);
-//  textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-//  drawTexture(renderer, x, y, w*strlen(text), h, textTexture);
-//  SDL_FreeSurface(textSurface);
-//  SDL_DestroyTexture(textTexture);
-//}
+void render_text(const char *text, int x, int y, int w, int h) {
+  textSurface = TTF_RenderText_Solid(font, text, font_color);
+  textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+  drawTexture(renderer, x, y, w*strlen(text), h, textTexture);
+  SDL_FreeSurface(textSurface);
+  SDL_DestroyTexture(textTexture);
+}
 
 void render_text_mid_list(const char *text[], int y, int w, int h, SDL_Color color) {
   for (int i=0; i<item_length; i++) {
