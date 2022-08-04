@@ -27,7 +27,7 @@ int main()
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_q)
           break;
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT)
-          car_rect.x = move(LEFT, car_rect.x, car_mid); 
+          car_rect.x = move(LEFT, car_rect.x, car_mid);
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT)
           car_rect.x = move(RIGHT, car_rect.x, car_mid);
       }
@@ -35,15 +35,17 @@ int main()
       // Render game
       SDL_RenderClear(renderer);
       drawRect(renderer, ROAD_X, 0, ROAD_WIDTH, HEIGHT, 80, 80, 80); // Road
-      for (int i=0; i<(sizeof(jerry_rect_arr)/sizeof(jerry_rect_arr[0])); i++) {
+      for (int i = 0; i < (sizeof(jerry_rect_arr) / sizeof(jerry_rect_arr[0]));
+           i++) {
         drawImgRect(renderer, jerry_rect_arr[i], jerry_can); // jerry_can
       }
-      for (int i=0; i<(sizeof(cone_rect_arr)/sizeof(cone_rect_arr[0])); i++) {
+      for (int i = 0; i < (sizeof(cone_rect_arr) / sizeof(cone_rect_arr[0]));
+           i++) {
         drawImgRect(renderer, cone_rect_arr[i], cone); // cone
-      } 
+      }
       render_jerry_bar();
       drawImgRectRotated(renderer, car_rect, car); // car
-      render_score(score); 
+      render_score(score);
       SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255); // background colour
       SDL_RenderPresent(renderer);
 
@@ -53,39 +55,46 @@ int main()
 
       /* driving (moving objects) */
       // jerry cans
-      for (int i=0; i<(sizeof(jerry_rect_arr)/sizeof(jerry_rect_arr[0])); i++) {
-        jerry_rect_arr[i].y+=speed;
+      for (int i = 0; i < (sizeof(jerry_rect_arr) / sizeof(jerry_rect_arr[0]));
+           i++) {
+        jerry_rect_arr[i].y += speed;
         if (check_collision(jerry_rect_arr[i], car_rect)) {
           Mix_PlayChannel(-1, collect_sound_effect, 0);
           spawn_jerry(i);
           jerry += jerry_content;
-        } 
-        else if (jerry_rect_arr[0].y > HEIGHT+jerry_rect_arr[i].h) { // Check if jerry is outside of the screen if yes than respawn it
+        } else if (jerry_rect_arr[0].y >
+                   HEIGHT + jerry_rect_arr[i]
+                                .h) { // Check if jerry is outside of the screen
+                                      // if yes than respawn it
           spawn_jerry(0);
         }
-        if (check_collision(jerry_rect_arr[i], cone_rect_arr[i])) { // respawn jerry can if it is inside of a cone
+        if (check_collision(jerry_rect_arr[i],
+                            cone_rect_arr[i])) { // respawn jerry can if it is
+                                                 // inside of a cone
           spawn_jerry(0);
         }
       }
       // cones
-      for (int i=0; i<(sizeof(cone_rect_arr)/sizeof(cone_rect_arr[0])); i++) {
-        cone_rect_arr[i].y+=speed;
+      for (int i = 0; i < (sizeof(cone_rect_arr) / sizeof(cone_rect_arr[0]));
+           i++) {
+        cone_rect_arr[i].y += speed;
         if (check_collision(cone_rect_arr[i], car_rect)) {
           Mix_PlayChannel(-1, explosion, 0);
           end_game();
-        } else if (cone_rect_arr[0].y > HEIGHT+cone_rect_arr[i].h) {
+        } else if (cone_rect_arr[0].y > HEIGHT + cone_rect_arr[i].h) {
           spawn_cone(0);
         }
       }
 
       // ending game if jerry is empty or car collides with obstacle
-      if (jerry <= 0) 
+      if (jerry <= 0)
         end_game();
 
       if (jerry > jerry_max)
         jerry_overflow_speed();
-      else speed = DEFAULT_SPEED;
-    } 
+      else
+        speed = DEFAULT_SPEED;
+    }
 
     else if (is_game_over) {
       SDL_Event e;
@@ -115,9 +124,11 @@ int main()
           break;
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_q)
           break;
-        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN && item_index == 0)
+        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN &&
+            item_index == 0)
           start_game();
-        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN && item_index == 3)
+        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN &&
+            item_index == 3)
           quit_game();
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_DOWN)
           move_down();
@@ -132,7 +143,7 @@ int main()
     }
     int delta = SDL_GetTicks() - startLoop;
     if (delta < desiredDelta)
-      SDL_Delay(desiredDelta-delta);
+      SDL_Delay(desiredDelta - delta);
   }
   free_resources();
   return 0;

@@ -8,3 +8,7 @@ A small game written in C using SDL2
 - You can collect jerry cans to increase your fuel bar.
 - The more fuel you have, the more points you get and the faster you drive.
 - You have to avoid the cones.
+
+## Demo
+
+<img src="gameplay.gif">
